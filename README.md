@@ -215,10 +215,8 @@ Hay dos servicios, descritos en `render.yaml`. La URI de MongoDB no va en el rep
 
 ### URLs públicas
 
-Pendientes de publicar en Render. Cuando los dos servicios estén en línea, anótalas aquí:
-
-- Backend: _pendiente de despliegue_
-- Frontend: _pendiente de despliegue_
+- Backend: https://diario-gamer-api.onrender.com
+- Frontend: https://diario-gamer-web.onrender.com
 
 ## Flujo de la demo
 
