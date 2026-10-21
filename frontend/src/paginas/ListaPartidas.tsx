@@ -55,45 +55,29 @@ export function ListaPartidas() {
       )}
 
       {!cargando && !error && partidas.length > 0 && (
-        <div className="tabla-contenedor">
-          <table>
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Videojuego</th>
-                <th>Duración</th>
-                <th>Avance</th>
-                <th>Notas</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {partidas.map((partida) => {
-                const videojuegoId = idDePartida(partida);
-                return (
-                  <tr key={partida._id}>
-                    <td>{formatearFecha(partida.fecha)}</td>
-                    <td>
-                      {videojuegoId ? (
-                        <Link to={`/videojuegos/${videojuegoId}`}>{nombreDePartida(partida)}</Link>
-                      ) : (
-                        nombreDePartida(partida)
-                      )}
-                    </td>
-                    <td>{formatearDuracion(partida.duracionMinutos)}</td>
-                    <td>{partida.porcentajeAvance}%</td>
-                    <td>{partida.notas || "—"}</td>
-                    <td>
-                      <button type="button" className="peligro" onClick={() => manejarEliminar(partida._id)}>
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ul className="menu-xmb">
+          {partidas.map((partida) => {
+            const videojuegoId = idDePartida(partida);
+            return (
+              <li key={partida._id} className="fila-menu">
+                {videojuegoId ? (
+                  <Link to={`/videojuegos/${videojuegoId}`}>
+                    <span className="titulo-item">{nombreDePartida(partida)}</span>
+                    <span className="detalle-item">
+                      {formatearFecha(partida.fecha)} · {formatearDuracion(partida.duracionMinutos)} ·{" "}
+                      {partida.porcentajeAvance}%{partida.notas ? ` · ${partida.notas}` : ""}
+                    </span>
+                  </Link>
+                ) : (
+                  <span className="titulo-item">{nombreDePartida(partida)}</span>
+                )}
+                <button type="button" className="peligro" onClick={() => manejarEliminar(partida._id)}>
+                  Eliminar
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </div>
   );

@@ -99,41 +99,26 @@ export function ListaVideojuegos() {
       )}
 
       {!cargando && !error && videojuegos.length > 0 && (
-        <div className="tabla-contenedor">
-          <table>
-            <thead>
-              <tr>
-                <th>Juego</th>
-                <th>Plataforma</th>
-                <th>Género</th>
-                <th>Estado</th>
-                <th>Logros</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {videojuegos.map((videojuego) => {
-                const obtenidos = videojuego.logros.filter((logro) => logro.obtenido).length;
-                return (
-                  <tr key={videojuego._id}>
-                    <td>{videojuego.nombre}</td>
-                    <td>{ETIQUETA_PLATAFORMA[videojuego.plataforma]}</td>
-                    <td>{ETIQUETA_GENERO[videojuego.genero]}</td>
-                    <td>
-                      <span className={`marca ${videojuego.estado}`}>{ETIQUETA_ESTADO[videojuego.estado]}</span>
-                    </td>
-                    <td>
-                      {videojuego.logros.length === 0 ? "—" : `${obtenidos}/${videojuego.logros.length}`}
-                    </td>
-                    <td>
-                      <Link to={`/videojuegos/${videojuego._id}`}>Abrir</Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ul className="menu-xmb">
+          {videojuegos.map((videojuego) => {
+            const obtenidos = videojuego.logros.filter((logro) => logro.obtenido).length;
+            const logros =
+              videojuego.logros.length === 0 ? "sin logros" : `${obtenidos}/${videojuego.logros.length} logros`;
+            return (
+              <li key={videojuego._id}>
+                <Link to={`/videojuegos/${videojuego._id}`}>
+                  <span className="titulo-item">{videojuego.nombre}</span>
+                  <span className="detalle-item">
+                    {ETIQUETA_PLATAFORMA[videojuego.plataforma]} · {ETIQUETA_GENERO[videojuego.genero]} ·{" "}
+                    <span className={`marca ${videojuego.estado}`}>{ETIQUETA_ESTADO[videojuego.estado]}</span>
+                    {" · "}
+                    {logros}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </div>
   );

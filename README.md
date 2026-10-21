@@ -142,7 +142,7 @@ React + TypeScript + Vite y React Router. Ninguna página llama a `fetch`: eso e
 | Lista de partidas | `/partidas` | cargando / error / vacío |
 | Nueva partida | `/partidas/nueva` | cargando / error / vacío |
 
-En local, `VITE_API_URL` va vacío y Vite hace proxy de `/api` hacia `http://localhost:3000`. En Render, `VITE_API_URL` es la URL pública del backend.
+En local, con `npm run dev` y sin `VITE_API_URL`, el navegador llama directo a `http://localhost:3000`. En Render, `VITE_API_URL` es la URL pública del backend.
 
 ## Instalación local
 
@@ -202,14 +202,16 @@ Ejemplo de partida (cambia el id por el que devolvió el POST anterior):
 
 ## Despliegue en Render
 
-Hay dos servicios, descritos en `render.yaml`. Las credenciales no van en el repositorio: se cargan en el panel de Render.
+Hay dos servicios, descritos en `render.yaml`. La URI de MongoDB no va en el repositorio: se carga en el panel de Render.
 
-1. Publica el backend como Web Service (`rootDir: backend`, build `npm install && npm run build`, start `npm start`).
-2. Variables del backend: `MONGODB_URI`, `MONGODB_DB=diario_gamer`, `CORS_ORIGIN` (la URL del frontend, sin barra final). `PORT` lo pone Render.
-3. Publica el frontend como Static Site (`rootDir: frontend`, publish `dist`).
-4. Variable del frontend, **antes del build**: `VITE_API_URL` = URL pública del backend, sin barra final. Vite la incrusta al construir; si la cambias, hay que volver a construir.
-5. Cuando ya exista la URL del static site, actualiza `CORS_ORIGIN` del backend y redespliega la API.
-6. El archivo `frontend/public/_redirects` reescribe las rutas de React Router hacia `index.html`.
+1. En Render, crea un Blueprint y elige este repositorio. Render lee `render.yaml`.
+2. Cuando pida `MONGODB_URI`, pega la cadena de Atlas. `MONGODB_DB` ya queda en `diario_gamer`.
+3. La API es un Web Service (`rootDir: backend`, build `npm install && npm run build`, start `npm start`, plan free).
+4. El frontend es un Static Site (`rootDir: frontend`, publish `dist`). `VITE_API_URL` sale de la URL pública de la API y Vite la incrusta al construir.
+5. `CORS_ORIGIN=*` deja que el sitio estático llame a la API. El puerto lo pone Render.
+6. En Atlas, Network Access debe permitir `0.0.0.0/0`: el plan free de Render no tiene una IP fija.
+7. El archivo `frontend/public/_redirects` y la regla del blueprint reescriben las rutas de React Router hacia `index.html`.
+8. El plan free de la API se duerme tras unos minutos sin visitas. La primera petición después de eso tarda en responder.
 
 ### URLs públicas
 
