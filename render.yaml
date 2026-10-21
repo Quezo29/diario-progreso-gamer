@@ -1,0 +1,35 @@
+# Diario de Progreso Gamer en Render: dos servicios.
+# Las variables con sync: false se completan en el panel, no en este archivo.
+# Orden sugerido: publicar primero la API, copiar su URL a VITE_API_URL,
+# publicar el frontend y luego poner esa URL en CORS_ORIGIN.
+
+services:
+  - type: web
+    name: diario-gamer-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: MONGODB_DB
+        value: diario_gamer
+      - key: MONGODB_URI
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+
+  - type: web
+    name: diario-gamer-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
