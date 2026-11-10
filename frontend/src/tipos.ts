@@ -94,3 +94,46 @@ export interface PartidaFormulario {
   porcentajeAvance: number;
   notas?: string;
 }
+
+export interface HitoMeta {
+  descripcion: string;
+  porcentajeObjetivo: number;
+}
+
+export interface Meta {
+  _id: string;
+  videojuego: string;
+  horasSemanales: number;
+  diasPorSemana: number;
+  activa: boolean;
+  hitos: HitoMeta[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MetaFormulario {
+  horasSemanales: number;
+  diasPorSemana: number;
+  hitos: HitoMeta[];
+}
+
+export interface HitoProgreso extends HitoMeta {
+  alcanzado: boolean;
+}
+
+export interface ProgresoSemanal {
+  semana: {
+    inicio: string;
+    fin: string;
+  };
+  meta: {
+    horasSemanales: number;
+    diasPorSemana: number;
+  } | null;
+  horasSemana: number;
+  porcentajeHoras: number | null;
+  diasJugadosSemana: number;
+  rachaActual: number;
+  mejorRacha: number;
+  hitos: HitoProgreso[];
+}
