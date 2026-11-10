@@ -146,7 +146,7 @@ Decisiones:
 
 | Criterio | Verificación | Tipo |
 | --- | --- | --- |
-| BC-01 Validaciones de Meta (horas, días, hitos, objetivo) | `backend/src/modelos/Meta.model.test.ts` | Test sin BD |
+| BC-01 Validaciones de Meta (horas, días, hitos, objetivo) | `backend/tests/meta.model.test.ts` | Test sin BD |
 | BC-02 Una meta activa por juego y 409 | `POST /api/metas` dos veces con curl + revisión del servicio | Manual + curl |
 | BC-03 Crear meta válida devuelve 201 | curl de evidencia | Manual + curl |
 | BC-04 Consultar, listar, actualizar y desactivar | curl de evidencia | Manual + curl |
@@ -172,12 +172,12 @@ Decisiones:
 
 | Ticket | Archivos |
 | --- | --- |
-| T-01 | `backend/src/modelos/Meta.model.ts`, `backend/src/modelos/Meta.model.test.ts` |
-| T-02 | `backend/src/dominio/progreso.ts`, `backend/src/dominio/progreso.test.ts` |
+| T-01 | `backend/src/modelos/Meta.model.ts`, `backend/tests/meta.model.test.ts` |
+| T-02 | `backend/src/dominio/progreso.ts`, `backend/tests/progreso.test.ts` |
 | T-03 | `backend/src/services/metas.service.ts`, `backend/src/controllers/metas.controller.ts`, `backend/src/routes/metas.routes.ts`, `backend/src/routes/videojuegos.routes.ts`, `backend/src/controllers/videojuegos.controller.ts` |
 | T-04 | `backend/src/services/progreso.service.ts`, `backend/src/controllers/videojuegos.controller.ts`, `backend/src/routes/videojuegos.routes.ts` |
 | T-05 | `backend/src/services/videojuegos.service.ts`, `backend/src/middlewares/errorHandler.ts` |
-| T-09 | `backend/src/services/partidas.service.ts`, `backend/src/controllers/partidas.controller.ts`, `backend/src/routes/partidas.routes.ts`, `backend/src/dominio/progreso.test.ts` |
+| T-09 | `backend/src/services/partidas.service.ts`, `backend/src/controllers/partidas.controller.ts`, `backend/src/routes/partidas.routes.ts`, `backend/tests/progreso.test.ts` |
 
 ## 7. Decisiones de borde
 

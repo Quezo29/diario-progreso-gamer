@@ -47,4 +47,4 @@ También se fija la regla de fecha civil que usa el dominio de progreso.
 
 | Ticket | Archivos |
 | --- | --- |
-| T-09 | `backend/src/services/partidas.service.ts`, `backend/src/controllers/partidas.controller.ts`, `backend/src/routes/partidas.routes.ts`, `backend/src/dominio/progreso.ts`, `backend/src/dominio/progreso.test.ts` |
+| T-09 | `backend/src/services/partidas.service.ts`, `backend/src/controllers/partidas.controller.ts`, `backend/src/routes/partidas.routes.ts`, `backend/src/dominio/progreso.ts`, `backend/tests/progreso.test.ts` |
