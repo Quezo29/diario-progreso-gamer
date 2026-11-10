@@ -26,6 +26,24 @@ export async function crear(req: Request, res: Response, next: NextFunction): Pr
   }
 }
 
+export async function obtener(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const partida = await partidasService.obtenerPartidaPorId(req.params.id);
+    res.json({ partida, requestId: req.id });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function actualizar(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const partida = await partidasService.actualizarPartida(req.params.id, req.body);
+    res.json({ partida, requestId: req.id });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function eliminar(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     await partidasService.eliminarPartida(req.params.id);
