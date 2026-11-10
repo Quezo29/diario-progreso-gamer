@@ -17,6 +17,7 @@ import { Partida } from "../modelos/Partida.model";
 import { ApiError } from "../apiError";
 import { exigirObjectId } from "../exigirObjectId";
 import { partidaMasReciente } from "../dominio/progreso";
+import { eliminarMetasDeVideojuego } from "./metas.service";
 
 export interface FiltroVideojuegos {
   estado?: string;
@@ -82,6 +83,7 @@ export async function eliminarVideojuego(id: string): Promise<void> {
   }
 
   await Partida.deleteMany({ videojuego: id });
+  await eliminarMetasDeVideojuego(id);
   await videojuego.deleteOne();
 }
 
