@@ -8,6 +8,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as videojuegosService from "../services/videojuegos.service";
 import * as partidasService from "../services/partidas.service";
+import * as metasService from "../services/metas.service";
 
 function queryTexto(valor: unknown): string | undefined {
   return typeof valor === "string" && valor.length > 0 ? valor : undefined;
@@ -87,6 +88,15 @@ export async function listarPartidas(req: Request, res: Response, next: NextFunc
   try {
     const partidas = await partidasService.listarPartidasDeVideojuego(req.params.id);
     res.json({ total: partidas.length, partidas, requestId: req.id });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function listarMetas(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const metas = await metasService.listarMetasDeVideojuego(req.params.id);
+    res.json({ total: metas.length, metas, requestId: req.id });
   } catch (error) {
     next(error);
   }
