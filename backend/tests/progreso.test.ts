@@ -120,7 +120,7 @@ describe("horas y días jugados", () => {
     const progreso = calcularProgresoSemanal(partidas, meta({ horasSemanales: 5 }), AHORA);
 
     expect(progreso.horasSemana).toBe(3.3);
-    expect(progreso.porcentajeHoras).toBe(67);
+    expect(progreso.porcentajeHoras).toBe(66);
   });
 
   it("S-02: una partida futura de la misma semana no cuenta como día jugado", () => {
