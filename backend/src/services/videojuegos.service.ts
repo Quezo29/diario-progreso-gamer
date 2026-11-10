@@ -16,6 +16,7 @@ import {
 import { Partida } from "../modelos/Partida.model";
 import { ApiError } from "../apiError";
 import { exigirObjectId } from "../exigirObjectId";
+import { partidaMasReciente } from "../dominio/progreso";
 
 export interface FiltroVideojuegos {
   estado?: string;
@@ -140,12 +141,10 @@ export async function calcularResumen(videojuegoId: string): Promise<ResumenVide
   const minutosTotales = partidas.reduce((suma, partida) => suma + partida.duracionMinutos, 0);
   const horasTotales = Math.round((minutosTotales / 60) * 10) / 10;
 
-  const masReciente = partidas.reduce((actual, candidata) => {
-    const diferenciaFecha = candidata.fecha.getTime() - actual.fecha.getTime();
-    if (diferenciaFecha > 0) return candidata;
-    if (diferenciaFecha < 0) return actual;
-    return candidata.createdAt.getTime() > actual.createdAt.getTime() ? candidata : actual;
-  });
+  const masReciente = partidaMasReciente(partidas);
+  if (!masReciente) {
+    throw new ApiError(500, "No se pudo determinar la partida más reciente");
+  }
 
   return {
     totalPartidas: partidas.length,
