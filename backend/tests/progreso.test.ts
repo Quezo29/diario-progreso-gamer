@@ -240,7 +240,7 @@ describe("hitos", () => {
     expect(progreso.hitos[2].alcanzado).toBe(false);
   });
 
-  it("BC-19: sin partidas, las horas y rachas son 0 y ningún hito está alcanzado", () => {
+  it("BC-16: sin partidas, las horas y rachas son 0 y ningún hito está alcanzado", () => {
     const progreso = calcularProgresoSemanal([], meta(), AHORA);
 
     expect(progreso.horasSemana).toBe(0);
@@ -286,7 +286,7 @@ describe("meta y resumen", () => {
     expect(calcularProgresoSemanal([anterior, nueva], meta(), AHORA).hitos[1].alcanzado).toBe(true);
   });
 
-  it("BC-19: sin partidas y sin meta no hay hitos", () => {
+  it("BC-16: sin partidas y sin meta no hay hitos", () => {
     const progreso = calcularProgresoSemanal([], null, AHORA);
 
     expect(progreso).toMatchObject({
