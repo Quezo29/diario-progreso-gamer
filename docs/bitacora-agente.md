@@ -193,7 +193,19 @@ Las URLs públicas son:
 
 No quedan pendientes operativos de E2.
 
-## 10. Cómo se usó el agente
+## 10. Transición continua del tono
+
+El fondo cambiaba de matiz con un intervalo de cinco minutos y una transición de 300 s, lo que se
+percibía como saltos. Se reemplazó por la animación `deriva-tono` de 1800 s sobre `--tono`, con
+interpolación entre los tonos de la identidad XMB y respeto por `prefers-reduced-motion`.
+
+El PR #4 se fusionó a `main` como `8cce99b`. Render publicó el CSS `index-fk82l1f3.css`, que
+contiene `deriva-tono` y `1800s`. El muestreo sobre producción confirmó la interpolación
+(272 → 247 → 222 → 210 → 198 → 175 → 152) y el modo de movimiento reducido mantiene el tono en
+272. El primer intento usó `30min`, una unidad inválida en CSS que descartaba la animación; se
+corrigió a `1800s` antes de integrar.
+
+## 11. Cómo se usó el agente
 
 El agente trabajó con el harness del repositorio y con el flujo SDD como contrato:
 

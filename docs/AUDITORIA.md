@@ -224,6 +224,9 @@ la práctica se percibía como saltos entre colores. Se reemplazó por una anima
 | Interpolación | Muestreo pausado: 272 → 247 → 222 → 210 → 198 → 175 → 152 → 38 → 338 → 272 |
 | Movimiento reducido | `prefers-reduced-motion: reduce` deja `--tono: 272` y `animation: none` |
 | Build de frontend | Pasa (`tsc --noEmit && vite build`) |
+| Despliegue en Render | PR #4 (`8cce99b`); CSS `index-fk82l1f3.css` con `deriva-tono` y `1800s` |
+| Producción | Muestreo con la animación pausada en el sitio publicado: 272 → 222 → 198 → 152 → 38 → 338; sin errores de consola |
 
 El primer intento usó `30min`, una unidad no válida en CSS; el navegador descartaba la animación
-completa. La corrección a `1800s` quedó verificada en el navegador y documentada en `DESIGN.md`.
+completa. La corrección a `1800s` quedó verificada en el navegador, desplegada en producción y
+documentada en `DESIGN.md`.
