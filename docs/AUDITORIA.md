@@ -135,8 +135,8 @@ Evidencia principal:
 
 | Servicio | URL | Estado |
 | --- | --- | --- |
-| API | https://diario-gamer-api.onrender.com | Pendiente de reconstruir y verificar con E2 |
-| Frontend | https://diario-gamer-web.onrender.com | Pendiente de reconstruir y verificar con E2 |
+| API | https://diario-gamer-api.onrender.com | Responde 200 en `/api/salud`, pero sirve el build anterior a E2; falta reconstruir desde `main`. |
+| Frontend | https://diario-gamer-web.onrender.com | Responde 200 con el bundle anterior. El bundle `index-DUrw8RtF.js` no contiene “Progreso de esta semana”, así que E2 todavía no está en producción. |
 
 No hay credenciales de Render ni Render CLI en este entorno, así que no se puede ejecutar el
 despliegue ni confirmar que E2 esté en producción. Al integrar el pull request a `main`, Render

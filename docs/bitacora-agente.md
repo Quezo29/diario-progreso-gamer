@@ -181,9 +181,10 @@ revisado y las URLs públicas siguen siendo:
 - https://diario-gamer-api.onrender.com
 - https://diario-gamer-web.onrender.com
 
-Al integrar el pull request a `main`, Render debe reconstruir ambos servicios. La verificación
-posterior requiere el panel o una API key, comprobar `/api/salud`, abrir el frontend, crear una meta
-y confirmar la conexión a Atlas con Network Access `0.0.0.0/0`.
+Ambas responden 200, pero el bundle actual del frontend no contiene “Progreso de esta semana”: es
+el build anterior a E2. Al integrar el pull request a `main`, Render debe reconstruir ambos
+servicios. La verificación posterior requiere el panel o una API key, comprobar `/api/salud`, abrir
+el frontend, crear una meta y confirmar la conexión a Atlas con Network Access `0.0.0.0/0`.
 
 ## 10. Cómo se usó el agente
 
