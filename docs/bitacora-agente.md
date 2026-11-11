@@ -168,23 +168,30 @@ La revisión de diseño y las capturas están en `docs/evidencias/revision-disen
 | `cfdc680` | Fecha de hoy en Guayaquil. |
 | T-10 | Auditoría, README, esta bitácora y revisión de diseño. |
 
-## 9. Deuda y pendientes
+## 9. Deuda y despliegue
 
 Quedaron pagadas las deudas P-01, P-02/P-09, P-03, P-06, P-07/P-10 y P-08 del diagnóstico. Las
 demás siguen documentadas en el backlog y en la auditoría: tests de frontend y CI, paginación,
 OpenAPI, autenticación, reporte mensual, migración de fechas, analítica y notificaciones.
 
-El único pendiente operativo es el despliegue en Render. En este entorno no hay Render CLI ni
-credenciales de Render, así que no se pudo ejecutar ni verificar el despliegue. `render.yaml` está
-revisado y las URLs públicas siguen siendo:
+El PR #2 se fusionó a `main` como `f475c92` el 2026-11-11T01:01:42Z. Render reconstruyó ambos
+servicios automáticamente. La primera comprobación con el bundle nuevo fue a las 20:02 (hora
+local):
+
+- API: `GET /api/salud` respondió 200 y `GET /api/videojuegos/abc/progreso-semanal` respondió 400
+  con el mensaje de id inválido, lo que confirma que la ruta de E2 está desplegada.
+- Frontend: el índice sirvió `index-DY79RgsB.js`, que contiene “Progreso de esta semana” y la URL
+  pública de la API.
+- Navegador: el detalle de Hades en producción mostró la sección de progreso sin errores de
+  consola. La captura está en `docs/evidencias/capturas/produccion-render.jpeg`.
+- Atlas: la API devolvió los dos juegos existentes; las comprobaciones fueron de solo lectura.
+
+Las URLs públicas son:
 
 - https://diario-gamer-api.onrender.com
 - https://diario-gamer-web.onrender.com
 
-Ambas responden 200, pero el bundle actual del frontend no contiene “Progreso de esta semana”: es
-el build anterior a E2. Al integrar el pull request a `main`, Render debe reconstruir ambos
-servicios. La verificación posterior requiere el panel o una API key, comprobar `/api/salud`, abrir
-el frontend, crear una meta y confirmar la conexión a Atlas con Network Access `0.0.0.0/0`.
+No quedan pendientes operativos de E2.
 
 ## 10. Cómo se usó el agente
 
