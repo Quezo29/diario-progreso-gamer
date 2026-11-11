@@ -2,7 +2,7 @@
 
 Épica: E2 · Metas y rachas  
 PRD: `docs/prd/PRD.md`  
-Estado de los tickets: se actualiza en la auditoría final.
+Estado de los tickets: cerrados; el detalle de la verificación está en `docs/AUDITORIA.md`.
 
 ## 1. Historias de usuario (INVEST)
 
@@ -245,7 +245,27 @@ Convención de tipos: `backend`, `frontend`, `test`, `docs`.
   - Pull request con tickets y enlace a la auditoría.
   - Commit `docs(E2): T-10 ...`.
 
-## 3. Trazabilidad rápida
+## 3. Estado final de los tickets
+
+| Ticket | Estado | Evidencia |
+| --- | --- | --- |
+| T-01 | Hecho | `4ff1897`; `backend/tests/meta.model.test.ts` |
+| T-02 | Hecho | `4ae8bfe`; `backend/tests/progreso.test.ts` |
+| T-03 | Hecho | `63c3fe1`; curl de CRUD y 409 |
+| T-04 | Hecho | `9314a98`; curl de progreso |
+| T-05 | Hecho | `cf0d58b`; curl de cascada y tests del errorHandler |
+| T-06 | Hecho | `f5ed2ff`; `frontend/src/api/metasApi.ts` y build |
+| T-07 | Hecho | `a6e98db`; capturas del detalle y revisión de diseño |
+| T-08 | Hecho | `a5e3bcb`; formulario, validación y desactivación |
+| T-09 | Hecho | `bd27659` y `a4aec56`; curl de partidas y edición desde la UI |
+| T-10 | Hecho | `docs/AUDITORIA.md`, `docs/bitacora-agente.md`, README y PR a `main` |
+
+**Resultado local:** 46 de 46 criterios de spec verificados, 38 tests de backend, builds de backend
+y frontend en verde, 15 de 15 casos de API y revisión de diseño aprobada. El despliegue en Render
+queda como pendiente operativo porque este entorno no tiene credenciales de Render; los pasos para
+cerrarlo están en `docs/AUDITORIA.md` §7.
+
+## 4. Trazabilidad rápida
 
 | Historia | Criterios | Tickets | Spec |
 | --- | --- | --- | --- |
@@ -256,7 +276,7 @@ Convención de tipos: `backend`, `frontend`, `test`, `docs`.
 | E2-H5 | C-H5-01 a C-H5-04 | T-04, T-09 | Backend, frontend, edición |
 | E2-H6 | C-H6-01 a C-H6-03 | T-01, T-05 | Backend |
 
-## 4. Deuda técnica
+## 5. Deuda técnica
 
 | ID | Deuda | Motivo para diferir |
 | --- | --- | --- |
@@ -278,3 +298,6 @@ Convención de tipos: `backend`, `frontend`, `test`, `docs`.
 | P-06 | 409 para duplicado de meta activa. | T-05 |
 | P-07 / P-10 | Modelo Meta, validaciones e índice único parcial. | T-01 |
 | P-08 | Cascada de metas al eliminar un videojuego. | T-05 |
+
+La verificación de cada deuda pagada, con su criterio y su evidencia, está en
+`docs/AUDITORIA.md` §8. Las deudas D-01 a D-07 siguen abiertas y no bloquean la entrega.
