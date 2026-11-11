@@ -69,10 +69,7 @@ export function formatearHoras(horas: number): string {
 }
 
 export function hoyISO(): string {
-  const ahora = new Date();
-  const mes = String(ahora.getMonth() + 1).padStart(2, "0");
-  const dia = String(ahora.getDate()).padStart(2, "0");
-  return `${ahora.getFullYear()}-${mes}-${dia}`;
+  return FORMATO_DIA_EC.format(new Date());
 }
 
 export function nombreDePartida(partida: Partida): string {
