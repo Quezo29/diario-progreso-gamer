@@ -1,7 +1,7 @@
 # Auditoría E2 · Metas y rachas
 
 Fecha: 2026-11-10  
-Rama: `feature/e2-metas-rachas`  
+Rama: `feature/e2-metas-rachas`, integrada en `main` (`f475c92`)  
 Base: `main` (`e8e1b8d`)  
 Alcance: criterios BC-01 a BC-21, FC-01 a FC-16 y PC-01 a PC-09 de las specs de E2.
 
@@ -16,10 +16,11 @@ Alcance: criterios BC-01 a BC-21, FC-01 a FC-16 y PC-01 a PC-09 de las specs de 
 | Escenario de API | **15 de 15** casos correctos, sin datos residuales |
 | Revisión en navegador | Crear, editar, desactivar, 409, validación, error aislado, edición de partida, 320 px |
 | Revisión de diseño | Aprobada en `docs/evidencias/revision-diseno.md` |
-| Despliegue en Render | **Pendiente de verificación en producción** (ver §7) |
+| Despliegue en Render | **Verificado en producción** el 2026-11-10 a las 20:02 (hora local); ver §7 |
 
-La épica queda lista para integrar a `main`. El único pendiente operativo es ejecutar y verificar
-el despliegue en Render, que no se pudo hacer desde este entorno por falta de credenciales.
+La épica está integrada en `main` mediante el PR #2 (`f475c92`) y Render reconstruyó ambos
+servicios. La verificación de producción confirmó el bundle nuevo del frontend y la ruta de
+progreso semanal de la API. No quedan pendientes de código ni de despliegue.
 
 ## 2. Método y entorno
 
@@ -40,7 +41,8 @@ Evidencia principal:
 - `docs/evidencias/pruebas-curl.md`: flujo funcional y matriz de 15 casos de API.
 - `docs/evidencias/revision-diseno.md`: revisión visual, accesibilidad y responsive.
 - `docs/evidencias/hooks.md`: verificación del harness y de los hooks.
-- `docs/evidencias/capturas/`: cinco capturas del detalle y del error de progreso.
+- `docs/evidencias/capturas/`: cinco capturas del detalle y del error de progreso, más
+  `produccion-render.jpeg` de la verificación en producción.
 - `backend/tests/progreso.test.ts`, `meta.model.test.ts`, `errorHandler.test.ts`.
 
 ## 3. Matriz de backend (BC-01 a BC-21)
@@ -131,25 +133,24 @@ Evidencia principal:
 | Atlas | Conexión usada por la API local con `diario_gamer_e2_verificacion` | Funciona; no se imprimió la URI |
 | Blueprint | Revisión de `render.yaml`; `MONGODB_URI` con `sync: false` | Sin secretos |
 
-### Pendiente en producción
+### Verificado en producción
 
-| Servicio | URL | Estado |
+El despliegue se disparó al fusionar el PR #2 (`f475c92`) el 2026-11-11T01:01:42Z. Render
+reconstruyó ambos servicios y el bundle nuevo apareció a las 20:02 (hora local).
+
+| Servicio | Comprobación | Resultado |
 | --- | --- | --- |
-| API | https://diario-gamer-api.onrender.com | Responde 200 en `/api/salud`, pero sirve el build anterior a E2; falta reconstruir desde `main`. |
-| Frontend | https://diario-gamer-web.onrender.com | Responde 200 con el bundle anterior. El bundle `index-DUrw8RtF.js` no contiene “Progreso de esta semana”, así que E2 todavía no está en producción. |
+| API | `GET /api/salud` | 200 `{ estado: "ok" }` |
+| API | `GET /api/videojuegos/abc/progreso-semanal` | 400 con mensaje de id inválido; confirma que la ruta de E2 está desplegada |
+| API | `GET /api/videojuegos` y progreso de un juego existente | 200, semana `2026-11-09` a `2026-11-15`, meta, racha e hitos en el contrato nuevo |
+| Frontend | `https://diario-gamer-web.onrender.com` | 200, bundle `index-DY79RgsB.js` y CSS `index-BFzI31hp.css` |
+| Bundle | Búsqueda de “Progreso de esta semana”, “Crear meta” y la URL pública de la API | Las tres cadenas están presentes |
+| Navegador | Detalle de un juego en producción | La sección “Progreso de esta semana” se ve, sin errores en consola |
+| Atlas | Lectura de los dos juegos existentes | Responde con datos reales; no se escribieron datos de prueba |
 
-No hay credenciales de Render ni Render CLI en este entorno, así que no se puede ejecutar el
-despliegue ni confirmar que E2 esté en producción. Al integrar el pull request a `main`, Render
-debe reconstruir ambos servicios si siguen conectados al repositorio. La verificación posterior
-requiere:
-
-1. Abrir el panel de Render o usar una API key con permiso de despliegue.
-2. Confirmar que la API tomó el commit de `main` y que `GET /api/salud` responde 200.
-3. Abrir el frontend, crear una meta y comprobar que `VITE_API_URL` apunta a la API pública.
-4. Revisar en Atlas que el usuario de la URI tiene permisos y que Network Access permite
-   `0.0.0.0/0`, porque el plan free de Render no tiene IP fija.
-
-Este pendiente es operativo, no de código: los builds y el escenario funcional local pasan.
+La captura de la verificación en producción está en
+`docs/evidencias/capturas/produccion-render.jpeg`. No se crearon ni borraron datos en producción:
+las comprobaciones fueron de lectura.
 
 ## 8. Deuda
 
@@ -201,10 +202,11 @@ Este pendiente es operativo, no de código: los builds y el escenario funcional 
 
 ## 10. Conclusión
 
-E2 cumple localmente los 46 criterios de verificación de sus tres specs, con tests puros para las
-reglas de negocio, un escenario de API reproducible, build de producción y revisión de diseño. La
-deuda de fecha civil y la edición de partidas quedaron pagadas; el resto sigue documentado.
+E2 cumple los 46 criterios de verificación de sus tres specs, con tests puros para las reglas de
+negocio, un escenario de API reproducible, build de producción, revisión de diseño y despliegue
+verificado. La deuda de fecha civil y la edición de partidas quedaron pagadas; el resto sigue
+documentado.
 
-La integración a `main` puede hacerse con el pull request de la rama. La única verificación que no
-se pudo completar es el despliegue en Render, por falta de credenciales en el entorno; queda
-registrada como pendiente operativo con los pasos exactos para cerrarla.
+El PR #2 se integró a `main` como `f475c92` y Render reconstruyó la API y el frontend. La
+verificación de producción confirmó la ruta de progreso semanal, el bundle nuevo y la sección de
+progreso en el navegador. No quedan pendientes operativos de esta épica.

@@ -102,3 +102,4 @@ abierta y se compensa con build, revisión manual y esta revisión de diseño.
 | `capturas/detalle-sin-meta.jpeg` | Juego sin meta activa y sin partidas: ceros, invitación a crear meta. |
 | `capturas/progreso-error.jpeg` | Error aislado del progreso con “Reintentar” y el resto del detalle visible. |
 | `capturas/movil-320.jpeg` | Detalle a 320 px, una columna y sin scroll horizontal. |
+| `capturas/produccion-render.jpeg` | Detalle real en `https://diario-gamer-web.onrender.com` con la sección de progreso desplegada. |

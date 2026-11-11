@@ -258,12 +258,12 @@ Convención de tipos: `backend`, `frontend`, `test`, `docs`.
 | T-07 | Hecho | `a6e98db`; capturas del detalle y revisión de diseño |
 | T-08 | Hecho | `a5e3bcb`; formulario, validación y desactivación |
 | T-09 | Hecho | `bd27659` y `a4aec56`; curl de partidas y edición desde la UI |
-| T-10 | Hecho | `docs/AUDITORIA.md`, `docs/bitacora-agente.md`, README y PR a `main` |
+| T-10 | Hecho | `docs/AUDITORIA.md`, `docs/bitacora-agente.md`, README, PR #2 y despliegue verificado en `f475c92` |
 
-**Resultado local:** 46 de 46 criterios de spec verificados, 38 tests de backend, builds de backend
-y frontend en verde, 15 de 15 casos de API y revisión de diseño aprobada. El despliegue en Render
-queda como pendiente operativo porque este entorno no tiene credenciales de Render; los pasos para
-cerrarlo están en `docs/AUDITORIA.md` §7.
+**Resultado:** 46 de 46 criterios de spec verificados, 38 tests de backend, builds de backend y
+frontend en verde, 15 de 15 casos de API, revisión de diseño aprobada y despliegue verificado en
+Render. La API y el frontend públicos sirven el build de E2; la evidencia está en
+`docs/AUDITORIA.md` §7 y `docs/evidencias/capturas/produccion-render.jpeg`.
 
 ## 4. Trazabilidad rápida
 

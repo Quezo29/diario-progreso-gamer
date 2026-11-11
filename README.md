@@ -272,10 +272,11 @@ Hay dos servicios, descritos en `render.yaml`. La URI de MongoDB no va en el rep
 - Backend: https://diario-gamer-api.onrender.com
 - Frontend: https://diario-gamer-web.onrender.com
 
-El blueprint de `render.yaml` se mantiene sin secretos. Al integrar el pull request de E2 a
-`main`, Render reconstruye ambos servicios. La base de Atlas debe seguir permitiendo
-`0.0.0.0/0`; la URI se carga solo en el panel. El estado de este despliegue se anota en
-`docs/AUDITORIA.md`.
+El blueprint de `render.yaml` se mantiene sin secretos. El PR #2 se integró a `main` como
+`f475c92` y Render reconstruyó ambos servicios. La verificación de producción confirmó la ruta de
+progreso semanal, el bundle nuevo y la sección de progreso en el navegador. La base de Atlas debe
+seguir permitiendo `0.0.0.0/0`; la URI se carga solo en el panel. La evidencia está en
+`docs/AUDITORIA.md` §7.
 
 ## Cómo trabajamos con el agente
 
