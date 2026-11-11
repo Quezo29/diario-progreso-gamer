@@ -65,7 +65,7 @@ Evidencia principal:
 | **BC-16** Sin partidas: ceros y ningún hito | Test puro y curl de juego vacío; también sin meta | `progreso.test.ts`, 2 tests BC-16; `pruebas-curl.md` | Pasa |
 | **BC-17** Fecha civil y sesión que cruza medianoche | Medianoche UTC, instante de Ecuador y sesión 23:30–00:30 | `progreso.test.ts`, 3 tests BC-17 | Pasa |
 | **BC-18** Cascada de metas al borrar el juego | Borrar juego, consultar meta y progreso: ambos 404 | Matriz final de `pruebas-curl.md` | Pasa |
-| **BC-19** 400/404/409/500 centralizados | Cinco tests del manejador: ApiError 409, ValidationError, CastError, E11000 y 500 sin stack; curl de los cuatro status | `errorHandler.test.ts`, `pruebas-curl.md` | Pasa |
+| **BC-19** 400/404/409/500 centralizados | Cinco tests del manejador: ApiError 409, ValidationError, CastError, E11000 y 500 sin stack; curl de 400, 404 y 409 | `errorHandler.test.ts`, `pruebas-curl.md` | Pasa |
 | **BC-20** Dominio sin base de datos | `backend/src/dominio` no importa Mongoose ni usa modelos, `find*` o `save` | Revisión de código con búsqueda sin coincidencias | Pasa |
 | **BC-21** Resumen del Proyecto 3 sin cambios de contrato | Test del desempate por `createdAt` de la última partida y build del backend | `progreso.test.ts`, test BC-21; `npm run build` | Pasa |
 
