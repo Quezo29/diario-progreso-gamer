@@ -14,7 +14,8 @@ import {
   obtenerVideojuegoPorId,
 } from "../api/videojuegosApi";
 import { eliminarPartida, obtenerPartidasDeVideojuego } from "../api/partidasApi";
-import { formatearDuracion, formatearFecha, formatearHoras } from "../formato";
+import { ProgresoSemanal } from "../componentes/ProgresoSemanal";
+import { fechaCivilDePartida, formatearDuracion, formatearFecha, formatearHoras, hoyISO } from "../formato";
 import { ETIQUETA_ESTADO, ETIQUETA_GENERO, ETIQUETA_PLATAFORMA, Partida, ResumenVideojuego, Videojuego } from "../tipos";
 
 export function DetalleVideojuego() {
@@ -28,6 +29,7 @@ export function DetalleVideojuego() {
   const [error, setError] = useState<string | null>(null);
   const [errorAccion, setErrorAccion] = useState<string | null>(null);
   const [logroEnCurso, setLogroEnCurso] = useState<string | null>(null);
+  const [recargaProgreso, setRecargaProgreso] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -71,7 +73,7 @@ export function DetalleVideojuego() {
 
   async function manejarEliminarJuego() {
     if (!id) return;
-    if (!window.confirm("¿Eliminar este videojuego y todas sus partidas?")) return;
+    if (!window.confirm("¿Eliminar este videojuego, sus partidas y sus metas?")) return;
     setErrorAccion(null);
     try {
       await eliminarVideojuego(id);
@@ -93,6 +95,7 @@ export function DetalleVideojuego() {
       ]);
       setPartidas(partidasNuevas);
       setResumen(resumenNuevo);
+      setRecargaProgreso((valor) => valor + 1);
     } catch (err) {
       setErrorAccion(err instanceof Error ? err.message : "No se pudo eliminar la partida.");
     }
@@ -103,6 +106,8 @@ export function DetalleVideojuego() {
   if (!videojuego || !resumen) return <p className="estado-pantalla">No se encontró el videojuego.</p>;
 
   const avance = Math.min(100, Math.max(0, resumen.porcentajeAvanceActual));
+  const hoy = hoyISO();
+  const hayPartidaHoy = partidas.some((partida) => fechaCivilDePartida(partida.fecha) === hoy);
 
   return (
     <div>
@@ -143,6 +148,13 @@ export function DetalleVideojuego() {
           Eliminar
         </button>
       </p>
+
+      <ProgresoSemanal
+        videojuegoId={videojuego._id}
+        recarga={recargaProgreso}
+        hayPartidas={partidas.length > 0}
+        hayPartidaHoy={hayPartidaHoy}
+      />
 
       <section className="panel" aria-labelledby="titulo-logros">
         <h2 id="titulo-logros">Logros</h2>
