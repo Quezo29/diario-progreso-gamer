@@ -7,7 +7,8 @@ productividad corporativa. La interfaz acompaña; no presiona ni convierte el ju
 
 1. **Una sola columna**: el contenido respira en el centro, como una ola XMB.
 2. **Luz sobre color**: el fondo cambia de tono lentamente; el texto blanco flota con una sombra
-   fina para leerse sobre cualquier tono.
+   fina para leerse sobre cualquier tono. La transición del tono es continua, con interpolación
+   entre los valores, sin saltos bruscos de un color a otro.
 3. **Datos sin ruido**: horas, días y rachas se muestran en cifras grandes y etiquetas pequeñas.
 4. **El progreso no se dramatiza**: una meta incumplida se dice con calma; no hay alertas rojas
    ni mensajes que culpen.
@@ -23,7 +24,7 @@ componente nuevo debe introducir colores, tipografías o sombras fuera de esta l
 
 | Token | Valor | Uso |
 | --- | --- | --- |
-| `--tono` | `272` (se anima entre 272, 222, 198, 152, 38 y 338) | Matiz del cielo XMB. |
+| `--tono` | `272` (ciclo continuo de 30 min entre 272, 222, 198, 152, 38, 338 y vuelta a 272) | Matiz del cielo XMB. |
 | `--color-fondo` | `hsl(var(--tono) 62% 38%)` | Fondo base del documento. |
 | `--color-tinta` | `#ffffff` | Texto principal, iconos activos, barra. |
 | `--color-tinta-tenue` | `rgba(255, 255, 255, 0.78)` | Texto secundario y etiquetas. |

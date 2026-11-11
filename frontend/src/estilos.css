@@ -105,7 +105,34 @@ button {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  transition: --tono 300s linear;
+  animation: deriva-tono 1800s linear infinite;
+}
+
+@keyframes deriva-tono {
+  0%,
+  100% {
+    --tono: 272;
+  }
+
+  16.6667% {
+    --tono: 222;
+  }
+
+  33.3333% {
+    --tono: 198;
+  }
+
+  50% {
+    --tono: 152;
+  }
+
+  66.6667% {
+    --tono: 38;
+  }
+
+  83.3333% {
+    --tono: 338;
+  }
 }
 
 .cielo {
@@ -825,7 +852,8 @@ legend {
 
 @media (prefers-reduced-motion: reduce) {
   .xmb {
-    transition: none;
+    --tono: 272;
+    animation: none;
   }
 
   *,

@@ -210,3 +210,20 @@ documentado.
 El PR #2 se integró a `main` como `f475c92` y Render reconstruyó la API y el frontend. La
 verificación de producción confirmó la ruta de progreso semanal, el bundle nuevo y la sección de
 progreso en el navegador. No quedan pendientes operativos de esta épica.
+
+## 11. Corrección posterior: transición del tono
+
+El fondo cambiaba de matiz con un intervalo de cinco minutos y una transición de 300 s, lo que en
+la práctica se percibía como saltos entre colores. Se reemplazó por una animación CSS continua de
+1800 s (`deriva-tono`) sobre la propiedad registrada `--tono`, con interpolación entre los valores
+272, 222, 198, 152, 38, 338 y vuelta a 272.
+
+| Comprobación | Resultado |
+| --- | --- |
+| Regla CSS válida | `animation: deriva-tono 1800s linear infinite` aplicada en `.xmb` |
+| Interpolación | Muestreo pausado: 272 → 247 → 222 → 210 → 198 → 175 → 152 → 38 → 338 → 272 |
+| Movimiento reducido | `prefers-reduced-motion: reduce` deja `--tono: 272` y `animation: none` |
+| Build de frontend | Pasa (`tsc --noEmit && vite build`) |
+
+El primer intento usó `30min`, una unidad no válida en CSS; el navegador descartaba la animación
+completa. La corrección a `1800s` quedó verificada en el navegador y documentada en `DESIGN.md`.

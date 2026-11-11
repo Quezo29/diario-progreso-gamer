@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
-const TONOS = [272, 222, 198, 152, 38, 338];
-const CINCO_MINUTOS = 5 * 60 * 1000;
-
 function columnaActiva(pathname: string): number {
   if (pathname.startsWith("/partidas")) return 1;
   if (pathname === "/videojuegos/nuevo" || pathname.endsWith("/editar")) return 2;
@@ -36,22 +33,9 @@ function Reloj() {
 export function Marco() {
   const { pathname } = useLocation();
   const columna = columnaActiva(pathname);
-  const [tono, setTono] = useState(TONOS[0]);
-
-  useEffect(() => {
-    let indice = 0;
-    const id = window.setInterval(() => {
-      indice = (indice + 1) % TONOS.length;
-      setTono(TONOS[indice]);
-    }, CINCO_MINUTOS);
-    return () => window.clearInterval(id);
-  }, []);
 
   return (
-    <div
-      className="xmb"
-      style={{ ["--col" as string]: columna, ["--tono" as string]: tono }}
-    >
+    <div className="xmb" style={{ ["--col" as string]: columna }}>
       <div className="cielo" aria-hidden="true" />
       <Onda />
       <Reloj />
