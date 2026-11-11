@@ -699,6 +699,35 @@ legend {
   margin-bottom: 0.65rem;
 }
 
+.hitos-editor .nota {
+  margin: 0 0 var(--espacio-2);
+}
+
+.fila-hito-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 8rem auto;
+  gap: var(--espacio-2);
+  align-items: end;
+  margin-bottom: var(--espacio-3);
+}
+
+.campo-hito {
+  min-width: 0;
+}
+
+.campo-hito input {
+  width: 100%;
+}
+
+.hitos-editor > button {
+  align-self: flex-start;
+  margin-top: var(--espacio-1);
+}
+
+.acciones-secundarias {
+  margin-top: var(--espacio-4);
+}
+
 .check {
   flex-direction: row !important;
   align-items: center;
@@ -776,6 +805,14 @@ legend {
   .lista-hitos li {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .fila-hito-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .fila-hito-meta button {
+    justify-self: start;
   }
 }
 
