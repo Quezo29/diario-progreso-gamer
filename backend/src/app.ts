@@ -13,6 +13,7 @@ import { logger } from "./middlewares/logger";
 import { errorHandler } from "./middlewares/errorHandler";
 import { videojuegosRouter } from "./routes/videojuegos.routes";
 import { partidasRouter } from "./routes/partidas.routes";
+import { metasRouter } from "./routes/metas.routes";
 import { ApiError } from "./apiError";
 
 const ORIGENES_LOCALES = ["http://localhost:5173", "http://127.0.0.1:5173"];
@@ -53,6 +54,7 @@ export function crearApp(): Express {
 
   app.use("/api/videojuegos", videojuegosRouter);
   app.use("/api/partidas", partidasRouter);
+  app.use("/api/metas", metasRouter);
 
   app.use("/api", (req: Request, _res: Response, next) => {
     next(new ApiError(404, `Ruta no encontrada: ${req.method} ${req.originalUrl}`));

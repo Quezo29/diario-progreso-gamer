@@ -13,6 +13,8 @@ export const videojuegosRouter = Router();
 videojuegosRouter.get("/", videojuegosController.listar);
 videojuegosRouter.get("/:id", videojuegosController.obtenerPorId);
 videojuegosRouter.get("/:id/partidas", videojuegosController.listarPartidas);
+videojuegosRouter.get("/:id/metas", videojuegosController.listarMetas);
+videojuegosRouter.get("/:id/progreso-semanal", videojuegosController.progresoSemanal);
 videojuegosRouter.get("/:id/resumen", videojuegosController.resumen);
 videojuegosRouter.post("/", videojuegosController.crear);
 videojuegosRouter.put("/:id", videojuegosController.actualizar);

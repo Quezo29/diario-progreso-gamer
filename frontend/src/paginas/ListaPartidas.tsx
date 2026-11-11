@@ -71,9 +71,14 @@ export function ListaPartidas() {
                 ) : (
                   <span className="titulo-item">{nombreDePartida(partida)}</span>
                 )}
-                <button type="button" className="peligro" onClick={() => manejarEliminar(partida._id)}>
-                  Eliminar
-                </button>
+                <div className="acciones-fila">
+                  <Link className="enlace-boton" to={`/partidas/${partida._id}/editar`}>
+                    Editar
+                  </Link>
+                  <button type="button" className="peligro" onClick={() => manejarEliminar(partida._id)}>
+                    Eliminar
+                  </button>
+                </div>
               </li>
             );
           })}

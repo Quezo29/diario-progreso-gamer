@@ -1,0 +1,13 @@
+{
+  "name": "diario-progreso-gamer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Harness y utilidades del Diario de Progreso Gamer",
+  "scripts": {
+    "format": "prettier --write \"{AGENTS.md,CLAUDE.md,DESIGN.md,README.md,docs/**/*.md,backend/src/**/*.ts,frontend/src/**/*.{ts,tsx,css}}\"",
+    "format:check": "prettier --check \"{AGENTS.md,CLAUDE.md,DESIGN.md,README.md,docs/**/*.md,backend/src/**/*.ts,frontend/src/**/*.{ts,tsx,css}}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}

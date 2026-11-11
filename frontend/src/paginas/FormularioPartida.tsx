@@ -2,19 +2,22 @@
  * paginas/FormularioPartida.tsx
  * -----------------------------
  * Anota una sesión. Si se llega desde la ficha (?videojuegoId=...),
- * ese juego queda elegido. Al guardar, el detalle muestra el resumen nuevo.
+ * ese juego queda elegido. En modo edición precarga la partida y usa la
+ * fecha civil para no correrla un día en America/Guayaquil.
  */
 
 import { FormEvent, useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { crearPartida } from "../api/partidasApi";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { actualizarPartida, crearPartida, obtenerPartidaPorId } from "../api/partidasApi";
 import { obtenerVideojuegos } from "../api/videojuegosApi";
-import { hoyISO } from "../formato";
+import { fechaCivilDePartida, hoyISO } from "../formato";
 import { PartidaFormulario, Videojuego } from "../tipos";
 
 export function FormularioPartida() {
   const [parametros] = useSearchParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const editando = Boolean(id);
 
   const [videojuegos, setVideojuegos] = useState<Videojuego[]>([]);
   const [form, setForm] = useState<PartidaFormulario>({
@@ -27,19 +30,49 @@ export function FormularioPartida() {
   const [cargando, setCargando] = useState(true);
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorCarga, setErrorCarga] = useState<string | null>(null);
 
   useEffect(() => {
-    obtenerVideojuegos()
-      .then((lista) => {
+    let vigente = true;
+    setCargando(true);
+    setErrorCarga(null);
+
+    Promise.all([obtenerVideojuegos(), id ? obtenerPartidaPorId(id) : Promise.resolve(null)])
+      .then(([lista, partida]) => {
+        if (!vigente) return;
         setVideojuegos(lista);
+
+        if (partida) {
+          const videojuegoId =
+            partida.videojuego && typeof partida.videojuego === "object"
+              ? partida.videojuego._id
+              : (partida.videojuego ?? "");
+          setForm({
+            videojuego: videojuegoId,
+            fecha: fechaCivilDePartida(partida.fecha),
+            duracionMinutos: partida.duracionMinutos,
+            porcentajeAvance: partida.porcentajeAvance,
+            notas: partida.notas ?? "",
+          });
+          return;
+        }
+
         setForm((actual) => {
           if (actual.videojuego || lista.length === 0) return actual;
           return { ...actual, videojuego: lista[0]._id };
         });
       })
-      .catch((err: unknown) => setError(err instanceof Error ? err.message : "No se pudieron cargar los videojuegos."))
-      .finally(() => setCargando(false));
-  }, []);
+      .catch((err: unknown) =>
+        setErrorCarga(err instanceof Error ? err.message : "No se pudo preparar el formulario.")
+      )
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+
+    return () => {
+      vigente = false;
+    };
+  }, [id]);
 
   async function manejarEnvio(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
@@ -49,29 +82,33 @@ export function FormularioPartida() {
       setError("El videojuego y la fecha son obligatorios.");
       return;
     }
-    if (form.duracionMinutos < 1) {
-      setError("La duración mínima es 1 minuto.");
+    if (!Number.isFinite(form.duracionMinutos) || form.duracionMinutos < 1 || form.duracionMinutos > 10080) {
+      setError("La duración tiene que estar entre 1 y 10080 minutos.");
       return;
     }
-    if (form.porcentajeAvance < 0 || form.porcentajeAvance > 100) {
+    if (!Number.isFinite(form.porcentajeAvance) || form.porcentajeAvance < 0 || form.porcentajeAvance > 100) {
       setError("El avance tiene que estar entre 0 y 100.");
       return;
     }
 
     try {
       setGuardando(true);
-      await crearPartida(form);
+      if (id) {
+        await actualizarPartida(id, form);
+      } else {
+        await crearPartida(form);
+      }
       navigate(`/videojuegos/${form.videojuego}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo registrar la partida.");
+      setError(err instanceof Error ? err.message : "No se pudo guardar la partida.");
     } finally {
       setGuardando(false);
     }
   }
 
   if (cargando) return <p className="estado-pantalla">Cargando el formulario...</p>;
-  if (error && videojuegos.length === 0) {
-    return <p className="aviso">No se pudo preparar el formulario: {error}</p>;
+  if (errorCarga) {
+    return <p className="aviso">No se pudo preparar el formulario: {errorCarga}</p>;
   }
   if (videojuegos.length === 0) {
     return (
@@ -87,10 +124,16 @@ export function FormularioPartida() {
   return (
     <div>
       <p className="volver">
-        <Link to="/partidas">Volver a partidas</Link>
+        <Link to={form.videojuego ? `/videojuegos/${form.videojuego}` : "/partidas"}>
+          {editando ? "Volver al juego" : "Volver a partidas"}
+        </Link>
       </p>
-      <h1>Nueva partida</h1>
-      {error && <p className="aviso">{error}</p>}
+      <h1>{editando ? "Editar partida" : "Nueva partida"}</h1>
+      {error && (
+        <p className="aviso" role="alert">
+          {error}
+        </p>
+      )}
 
       <form onSubmit={manejarEnvio}>
         <label htmlFor="videojuego">Videojuego</label>
@@ -147,7 +190,7 @@ export function FormularioPartida() {
         />
 
         <button type="submit" className="primario" disabled={guardando}>
-          {guardando ? "Guardando..." : "Registrar partida"}
+          {guardando ? "Guardando..." : editando ? "Guardar cambios" : "Registrar partida"}
         </button>
       </form>
     </div>

@@ -5,7 +5,8 @@
  *   1. ApiError              → el status que traiga (404 referencia, 400 regla)
  *   2. ValidationError       → 400  (required, enum, min, max)
  *   3. CastError             → 400  (id mal formado)
- *   4. cualquier otro        → 500  (no se filtra el detalle interno)
+ *   4. duplicado E11000      → 409  (índice único de meta activa)
+ *   5. cualquier otro        → 500  (no se filtra el detalle interno)
  */
 
 import { Request, Response, NextFunction } from "express";
@@ -26,6 +27,14 @@ export function errorHandler(err: unknown, req: Request, res: Response, _next: N
   if (err instanceof mongoose.Error.CastError) {
     res.status(400).json({
       error: `"${String(err.value)}" no es un id válido para el campo "${err.path}"`,
+      requestId: req.id,
+    });
+    return;
+  }
+
+  if (typeof err === "object" && err !== null && (err as { code?: number }).code === 11000) {
+    res.status(409).json({
+      error: "El videojuego ya tiene una meta activa. Desactívala antes de crear o activar otra.",
       requestId: req.id,
     });
     return;

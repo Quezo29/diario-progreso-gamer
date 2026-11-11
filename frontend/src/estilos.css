@@ -10,6 +10,36 @@
   --tenue: rgba(255, 255, 255, 0.78);
   --bruma: rgba(255, 255, 255, 0.14);
   --fuente: "Outfit", "Segoe UI", sans-serif;
+
+  /* Tokens de DESIGN.md para los estilos nuevos de E2. */
+  --color-fondo: hsl(var(--tono) 62% 38%);
+  --color-tinta: #ffffff;
+  --color-tinta-tenue: rgba(255, 255, 255, 0.78);
+  --color-tinta-media: rgba(255, 255, 255, 0.55);
+  --color-linea: rgba(255, 255, 255, 0.28);
+  --color-linea-suave: rgba(255, 255, 255, 0.16);
+  --color-bruma: rgba(255, 255, 255, 0.14);
+  --color-superficie: rgba(255, 255, 255, 0.08);
+  --color-superficie-activa: rgba(255, 255, 255, 0.18);
+  --color-peligro: #ffe4ea;
+  --color-aviso: #ffe3a3;
+  --color-exito: #d9ffe8;
+  --texto-base: 1.25rem;
+  --texto-titulo: 2.35rem;
+  --texto-seccion: 1.7rem;
+  --texto-etiqueta: 0.85rem;
+  --texto-menor: 0.95rem;
+  --texto-cifra: 2.15rem;
+  --espacio-1: 0.35rem;
+  --espacio-2: 0.55rem;
+  --espacio-3: 0.8rem;
+  --espacio-4: 1.15rem;
+  --espacio-5: 1.6rem;
+  --espacio-6: 2.2rem;
+  --radio: 0;
+  --barra-alto: 3px;
+  --transicion: 120ms ease;
+  --ancho-columna: 52rem;
   --col: 0;
   --sombra-letra:
     1px 0 0 rgba(12, 0, 28, 0.9),
@@ -332,9 +362,16 @@ option {
   gap: 0.6rem;
 }
 
-.fila-menu a,
+.fila-menu > a,
 .fila-menu > span {
   flex: 1;
+}
+
+.acciones-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  align-items: center;
 }
 
 .marca {
@@ -456,6 +493,123 @@ button:disabled {
   line-height: 1;
 }
 
+.progreso {
+  max-width: 48rem;
+}
+
+.progreso-rango {
+  margin: 0 0 var(--espacio-3);
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-menor);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.meta-activa {
+  margin: 0 0 var(--espacio-2);
+  color: var(--color-tinta-tenue);
+}
+
+.progreso-metricas {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--espacio-3);
+  margin: var(--espacio-3) 0 var(--espacio-2);
+  padding: 0;
+}
+
+.progreso-metricas div {
+  padding-top: var(--espacio-1);
+  border-top: 1px solid var(--color-linea);
+}
+
+.progreso-metricas dt {
+  font-size: var(--texto-etiqueta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-tinta-tenue);
+}
+
+.progreso-metricas dd {
+  margin: var(--espacio-1) 0 0;
+  font-size: var(--texto-cifra);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.dato-apoyo {
+  display: block;
+  margin-top: var(--espacio-1);
+  color: var(--color-tinta-media);
+  font-size: var(--texto-menor);
+}
+
+.progreso-racha {
+  margin: var(--espacio-2) 0 0;
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-menor);
+  letter-spacing: 0.04em;
+}
+
+.barra-progreso {
+  height: var(--barra-alto);
+  margin: var(--espacio-4) 0 var(--espacio-1);
+  background: var(--color-bruma);
+  overflow: hidden;
+}
+
+.barra-progreso span {
+  display: block;
+  height: 100%;
+  background: var(--color-tinta);
+  box-shadow: 0 0 12px var(--color-tinta);
+  transition: width var(--transicion);
+}
+
+.progreso-porcentaje {
+  margin: 0;
+  color: var(--color-tinta-tenue);
+  font-size: var(--texto-menor);
+}
+
+.hitos-meta {
+  margin-top: var(--espacio-4);
+}
+
+.hitos-meta h3 {
+  margin: 0;
+  font-size: var(--texto-etiqueta);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-tinta-tenue);
+}
+
+.lista-hitos {
+  list-style: none;
+  margin: var(--espacio-2) 0 0;
+  padding: 0;
+}
+
+.lista-hitos li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  padding: var(--espacio-2) 0;
+  border-top: 1px solid var(--color-linea-suave);
+}
+
+.hito-alcanzado .estado-hito {
+  color: var(--color-exito);
+}
+
+.estado-hito {
+  font-size: var(--texto-menor);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .avance {
   height: 3px;
   margin-top: 0.9rem;
@@ -552,6 +706,35 @@ legend {
   margin-bottom: 0.65rem;
 }
 
+.hitos-editor .nota {
+  margin: 0 0 var(--espacio-2);
+}
+
+.fila-hito-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 8rem auto;
+  gap: var(--espacio-2);
+  align-items: end;
+  margin-bottom: var(--espacio-3);
+}
+
+.campo-hito {
+  min-width: 0;
+}
+
+.campo-hito input {
+  width: 100%;
+}
+
+.hitos-editor > button {
+  align-self: flex-start;
+  margin-top: var(--espacio-1);
+}
+
+.acciones-secundarias {
+  margin-top: var(--espacio-4);
+}
+
 .check {
   flex-direction: row !important;
   align-items: center;
@@ -610,9 +793,46 @@ legend {
     grid-template-columns: 1fr;
   }
 
+  .progreso-metricas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .logros li,
   .fila-menu {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .progreso-metricas {
+    grid-template-columns: 1fr;
+  }
+
+  .lista-hitos li {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .fila-hito-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .fila-hito-meta button {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xmb {
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

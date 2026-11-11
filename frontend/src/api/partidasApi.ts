@@ -23,15 +23,36 @@ export async function obtenerPartidasDeVideojuego(videojuegoId: string): Promise
   return datos.partidas;
 }
 
+function cuerpoDePartida(datos: PartidaFormulario) {
+  const notas = datos.notas?.trim() ?? "";
+  return {
+    ...datos,
+    fecha: `${datos.fecha}T12:00:00.000Z`,
+    notas,
+  };
+}
+
+export async function obtenerPartidaPorId(id: string): Promise<Partida> {
+  const respuesta = await fetch(`${BASE_PARTIDAS}/${id}`);
+  const datos = await manejarRespuesta<{ partida: Partida }>(respuesta);
+  return datos.partida;
+}
+
 export async function crearPartida(datos: PartidaFormulario): Promise<Partida> {
   const respuesta = await fetch(BASE_PARTIDAS, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      ...datos,
-      fecha: `${datos.fecha}T00:00:00.000Z`,
-      notas: datos.notas?.trim() ? datos.notas.trim() : undefined,
-    }),
+    body: JSON.stringify(cuerpoDePartida(datos)),
+  });
+  const resultado = await manejarRespuesta<{ partida: Partida }>(respuesta);
+  return resultado.partida;
+}
+
+export async function actualizarPartida(id: string, datos: PartidaFormulario): Promise<Partida> {
+  const respuesta = await fetch(`${BASE_PARTIDAS}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(cuerpoDePartida(datos)),
   });
   const resultado = await manejarRespuesta<{ partida: Partida }>(respuesta);
   return resultado.partida;
