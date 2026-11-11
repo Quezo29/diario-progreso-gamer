@@ -237,9 +237,14 @@ export function DetalleVideojuego() {
                     <td>{partida.porcentajeAvance}%</td>
                     <td>{partida.notas || "—"}</td>
                     <td>
-                      <button type="button" className="peligro" onClick={() => manejarEliminarPartida(partida._id)}>
-                        Eliminar
-                      </button>
+                      <div className="acciones-fila">
+                        <Link className="enlace-boton" to={`/partidas/${partida._id}/editar`}>
+                          Editar
+                        </Link>
+                        <button type="button" className="peligro" onClick={() => manejarEliminarPartida(partida._id)}>
+                          Eliminar
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

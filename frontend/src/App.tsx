@@ -20,6 +20,7 @@ export default function App() {
           <Route path="/videojuegos/:id/meta/editar" element={<FormularioMeta />} />
           <Route path="/partidas" element={<ListaPartidas />} />
           <Route path="/partidas/nueva" element={<FormularioPartida />} />
+          <Route path="/partidas/:id/editar" element={<FormularioPartida />} />
         </Route>
       </Routes>
     </BrowserRouter>

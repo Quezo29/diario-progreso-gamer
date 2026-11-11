@@ -362,9 +362,16 @@ option {
   gap: 0.6rem;
 }
 
-.fila-menu a,
+.fila-menu > a,
 .fila-menu > span {
   flex: 1;
+}
+
+.acciones-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  align-items: center;
 }
 
 .marca {
