@@ -103,3 +103,14 @@ abierta y se compensa con build, revisión manual y esta revisión de diseño.
 | `capturas/progreso-error.jpeg` | Error aislado del progreso con “Reintentar” y el resto del detalle visible. |
 | `capturas/movil-320.jpeg` | Detalle a 320 px, una columna y sin scroll horizontal. |
 | `capturas/produccion-render.jpeg` | Detalle real en `https://diario-gamer-web.onrender.com` con la sección de progreso desplegada. |
+
+## 8. Transición continua del tono
+
+La revisión posterior detectó que el cambio de color del cielo se percibía como saltos. Se
+reemplazó el intervalo de cinco minutos por una animación CSS continua de 1800 s sobre `--tono`,
+con los mismos tonos de la identidad XMB y una interpolación gradual entre ellos.
+
+En el navegador se pausó la animación y se muestreó el tono en distintos puntos del ciclo. Los
+valores intermedios (247, 210, 175) confirman que la interpolación es continua. Con
+`prefers-reduced-motion: reduce` el tono queda fijo en 272 y la animación se desactiva. La
+verificación completa está en `docs/AUDITORIA.md` §11.
